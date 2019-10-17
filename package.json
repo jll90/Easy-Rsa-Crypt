@@ -1,0 +1,22 @@
+{
+  "name": "crypt",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "tsc && node test/index.js",
+    "start": "tsc-watch --onSuccess \"node dist/index.js\"",
+    "start:prod": "tsc && node dist/index.js"
+  },
+  "dependencies": {
+    "node-rsa": "^1.0.6",
+    "typescript": "^3.6.4"
+  },
+  "devDependencies": {
+    "ts-node": "^8.1.0",
+    "tsc-watch": "^2.1.2",
+    "@types/node": "^12.11.1"
+  },
+  "author": "",
+  "license": "ISC"
+}
