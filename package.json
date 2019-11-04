@@ -1,5 +1,5 @@
 {
-  "name": "crypt",
+  "name": "easy-rsa-crypt",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
