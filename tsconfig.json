@@ -12,7 +12,8 @@
     "outDir": "dist",
     "skipLibCheck": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "declaration": true
   },
   "exclude": [
     "node_modules"

@@ -2,26 +2,23 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const node_rsa_1 = __importDefault(require("node-rsa"));
-const fs_1 = require("fs");
-const path = __importStar(require("path"));
 const config_1 = require("../config");
 let key = null;
+let fetchKeyFn;
+exports.setFetchKeyFn = (fn) => {
+    fetchKeyFn = fn;
+};
+exports.setKey = (keyStr) => {
+    key = new node_rsa_1.default(keyStr);
+};
 const getKey = () => {
     if (key) {
         return key;
     }
     else {
-        const fs = fs_1.readFileSync(path.resolve(__dirname, '../config/mykey.pem'));
-        key = new node_rsa_1.default(Buffer.from(fs));
+        key = new node_rsa_1.default(fetchKeyFn());
         return key;
     }
 };

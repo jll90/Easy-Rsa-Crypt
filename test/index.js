@@ -1,4 +1,6 @@
 const { Server, Client } = require('../dist');
+const fs = require('fs');
+const path = require('path');
 
 const assert = require('assert');
 const NodeRSA = require('node-rsa');
@@ -6,6 +8,8 @@ const { KEY_EXPORT_CONFIG } = require('../config');
 
 const testKey = new NodeRSA({b: 512});
 const pubKey = testKey.exportKey(KEY_EXPORT_CONFIG);
+const file = fs.readFileSync(path.resolve(__dirname, '../config/mykey.pem'));
+Server.setKey(Buffer.from(file));
 
 assert.ok(
   Client.encrypt(pubKey, "hello"),
@@ -16,6 +20,7 @@ assert.ok(
   Client.encrypt("fjklfadsl", "fail") === null,
   "encrypt/2 returns null when passed-in invalid public key"
 );
+
 
 const encryptedMessage = Client.encrypt(Server.generatePublicKey(), "hello");
 assert.ok(

@@ -1,16 +1,24 @@
 import NodeRSA from 'node-rsa';
-import {readFileSync} from "fs";
-import * as path from "path";
-import { KEY_EXPORT_CONFIG } from "../config";
+import {KEY_EXPORT_CONFIG} from "../config";
+
+type SetFetchFn = () => string | null
 
 let key = null;
+let fetchKeyFn:  SetFetchFn;
+
+export const setFetchKeyFn = (fn: SetFetchFn) => {
+	fetchKeyFn = fn
+};
+
+export const setKey = (keyStr: string) => {
+	key = new NodeRSA(keyStr);
+};
 
 const getKey = () => {
 	if (key){
 		return key;
 	} else {
-		const fs = readFileSync(path.resolve(__dirname, '../config/mykey.pem'));
-		key = new NodeRSA(Buffer.from(fs));
+		key = new NodeRSA(fetchKeyFn());
 		return key;
 	}
 };
